@@ -1,0 +1,23 @@
+group 'com.groovycoder'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    testCompile 'com.github.testcontainers:testcontainers-spock:5e50b96fa6ff8112e2f323e2f26cbdb0b1528cdc'
+    testCompile group: 'org.testcontainers', name: 'selenium', version: '1.2.0'
+
+
+    testCompile "org.gebish:geb-spock:1.1.1"
+    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:2.52.0"
+    testCompile "org.seleniumhq.selenium:selenium-support:2.52.0"
+
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.1'
+}
