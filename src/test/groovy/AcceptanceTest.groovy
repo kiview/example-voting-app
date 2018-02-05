@@ -35,11 +35,11 @@ class AcceptanceTest extends GebSpec {
     }
 
     def "can vote between groovy and kotlin"() {
-        when:
+        when: "I visit the vote page"
         browser.go ("http://vote")
         sleep(1000)
 
-        then:
+        then: "Both results show 100%"
         $("button", 0).text() == "GROOVY"
         $("button", 1).text() == "KOTLIN"
     }
