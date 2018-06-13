@@ -39,7 +39,7 @@ class AcceptanceTest extends GebSpec {
         browser.go ("http://vote")
         sleep(1000)
 
-        then: "Both results show 100%"
+        then: "Both results show text%"
         $("button", 0).text() == "GROOVY"
         $("button", 1).text() == "KOTLIN"
     }
