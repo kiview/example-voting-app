@@ -1,7 +1,11 @@
 import geb.spock.GebSpec
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
 import org.openqa.selenium.remote.DesiredCapabilities
+import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.BrowserWebDriverContainer
 import org.testcontainers.containers.DockerComposeContainer
+import org.testcontainers.containers.Network
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -22,7 +26,23 @@ class AcceptanceTest extends GebSpec {
         compose.starting(null)
 
         String network = findNetworkIdOfService("vote")
-        chrome.withNetworkMode(network)
+        Network tcNet = new Network() {
+            @Override
+            String getId() {
+                return network
+            }
+
+            @Override
+            void close() throws Exception {
+
+            }
+
+            @Override
+            Statement apply(Statement base, Description description) {
+                return null
+            }
+        }
+        chrome.withNetwork(tcNet)
 
         chrome.start()
         println chrome.vncAddress
@@ -67,13 +87,20 @@ class AcceptanceTest extends GebSpec {
         sleep(1000)
 
         then:
-        $("div.choice.cats div")[1].text() == "1010.0%"
+        $("div.choice.cats div")[1].text() == "100.0%"
     }
 
     private String findNetworkIdOfService(String service) {
-        compose.ambassadorContainers.find {
-            it.key.contains(service)
-        }.value.containerInfo.networkSettings.networks.values().first().networkID
+        def containerName = compose.ambassadorContainer.linkedContainers.find { k, v ->
+            k.contains(service)
+        }.value.containerName
+
+        def client = DockerClientFactory.instance().client()
+
+        def containerInfo = client.inspectContainerCmd(containerName).exec()
+        def networkName = containerInfo.networkSettings.networks.keySet().first()
+
+        return client.inspectNetworkCmd().withNetworkId(networkName).exec().id
     }
 
 }
