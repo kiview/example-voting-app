@@ -67,7 +67,7 @@ class AcceptanceTest extends GebSpec {
         sleep(1000)
 
         then:
-        $("div.choice.cats div")[1].text() == "100.0%"
+        $("div.choice.cats div")[1].text() == "1010.0%"
     }
 
     private String findNetworkIdOfService(String service) {
