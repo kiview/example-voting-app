@@ -23,7 +23,7 @@ class AcceptanceTest extends GebSpec {
             .withDesiredCapabilities(DesiredCapabilities.chrome())
 
     def setupSpec() {
-        compose.starting(null)
+        compose.start()
 
         String network = findNetworkIdOfService("vote")
         Network tcNet = new Network() {

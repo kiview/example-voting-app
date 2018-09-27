@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.testcontainers:testcontainers-bom:1.8.1'
+    testImplementation 'org.testcontainers:testcontainers-bom:1.9.1'
     testImplementation 'org.testcontainers:selenium'
     testImplementation 'org.testcontainers:spock'
 
