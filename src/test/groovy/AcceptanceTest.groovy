@@ -6,6 +6,7 @@ import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.BrowserWebDriverContainer
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.Network
+import org.testcontainers.lifecycle.TestDescription
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -21,6 +22,7 @@ class AcceptanceTest extends GebSpec {
     @Shared
     BrowserWebDriverContainer chrome = new BrowserWebDriverContainer()
             .withDesiredCapabilities(DesiredCapabilities.chrome())
+            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, new File("build/test-results"))
 
     def setupSpec() {
         compose.start()
@@ -50,6 +52,17 @@ class AcceptanceTest extends GebSpec {
     }
 
     def cleanupSpec() {
+        chrome.afterTest(new TestDescription() {
+            @Override
+            String getTestId() {
+                return "id"
+            }
+
+            @Override
+            String getFilesystemFriendlyName() {
+                return "myTest"
+            }
+        }, Optional.empty())
         chrome.stop()
         compose.finished(null)
     }
