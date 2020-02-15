@@ -14,7 +14,6 @@ services:
 
   result:
     build: ./result
-    command: nodemon --debug server.js
     volumes:
       - ./result:/app
     ports:
@@ -37,6 +36,8 @@ services:
 
   db:
     image: postgres:9.4
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - "db-data:/var/lib/postgresql/data"
     networks:
