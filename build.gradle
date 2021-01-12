@@ -11,11 +11,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.testcontainers:testcontainers-bom:1.9.1'
+    testImplementation 'org.testcontainers:testcontainers-bom:1.15.1'
     testImplementation 'org.testcontainers:selenium'
     testImplementation 'org.testcontainers:spock'
 
-    testImplementation "org.gebish:geb-spock:1.1.1"
+    testImplementation "org.gebish:geb-spock:4.0"
     testImplementation "org.seleniumhq.selenium:selenium-firefox-driver:2.52.0"
     testImplementation "org.seleniumhq.selenium:selenium-support:2.52.0"
 

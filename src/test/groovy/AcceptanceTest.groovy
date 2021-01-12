@@ -14,7 +14,7 @@ import spock.lang.Stepwise
 class AcceptanceTest extends GebSpec {
 
     @Shared
-    DockerComposeContainer compose = new DockerComposeContainer(new File("docker-compose-at.yml"))
+    DockerComposeContainer compose = new DockerComposeContainer(new File("./docker-compose-at.yml"))
             .withExposedService("vote_1", 80)
             .withExposedService("result_1", 80)
             .withLocalCompose(true)
